@@ -40,6 +40,7 @@
 	<target name="initDB" depends="init">
 		<description>Sets up the database for the project.</description>
 		<echo>Copying database to ${DbDir}.</echo>
+		<sports2000 dbName="sp2k" destDir="${DbDir}" />
 	</target>
 
 	<target name="build" depends="init,initDB">
