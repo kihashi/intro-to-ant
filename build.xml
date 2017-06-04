@@ -63,6 +63,7 @@
 	<target name="deploy" depends="init,initDB,build,package">
 		<description>Deploys the procedure library via SSH</description>
 		<echo>Deploying Package to ${SSH_SERVER}</echo>
+		<scp todir="${ant.project.name}" file="${DistDir}/${ant.project.name}.pl" />
 	</target>
 
 	<target name="copy_resx" depends="init">
