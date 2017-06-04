@@ -3,9 +3,10 @@
 	<property name="SrcDir" value="src" />
 	<property name="BuildDir" value="build" />
 	<property name="DistDir" value="dist" />
-	<property name="TestDir" value="test" />
+	<property name="TestDir" value="tests" />
 	<property name="DocDir" value="docs" />
 	<property name="DbDir" value="db" />
+	<property name="DbName" value="sp2k" />
 
 	<property file="build.properties" />
 
@@ -21,6 +22,8 @@
 		<echo>${SrcDir}</echo>
 		<echo>${BuildDir}</echo>
 		<echo>${DistDir}</echo>
+		<echo>${DbDir}</echo>
+		<echo>${DbName}</echo>
 		<echo>${TestDir}</echo>
 		<echo>${DLC}</echo>
 		<echo>${LOG}</echo>
@@ -41,12 +44,28 @@
 	<target name="initDB" depends="init">
 		<description>Sets up the database for the project.</description>
 		<echo>Copying database to ${DbDir}.</echo>
-		<sports2000 dbName="sp2k" destDir="${DbDir}" />
+		<sports2000 dbName="${DbName}" destDir="${DbDir}" />
 	</target>
 
 	<target name="build" depends="init,initDB">
 		<description>Compiles source code.</description>
 		<echo>Compiling Source Code from ${SrcDir} into ${BuildDir}</echo>
+	    <PCTCompile destDir="${BuildDir}">
+	      <PCTConnection dbName="${DbDir}/${DbName}" />
+	        <fileset dir="${SrcDir}">
+	            <include name="**/*.p" />
+	            <include name="**/*.cls" />
+	        </fileset>
+	        <fileset dir="${TestDir}">
+	            <include name="**/*.p" />
+	            <include name="**/*.cls" />
+	        </fileset>
+	        <propath>
+	            <pathelement path="${SrcDir}" />
+	            <pathelement path="${TestDir}" />
+	        </propath>
+	    </PCTCompile>
+		<antcall>copy_resx</antcall>
 	</target>
 
 	<target name="test" depends="init,build">
@@ -69,6 +88,11 @@
 	<target name="copy_resx" depends="init">
 		<description>Copies RESX files to the build directory.</description>
 		<echo>Copying resx files.</echo>
+	    <copy todir="${BuildDir}">
+	      <fileset dir="${SrcDir}">
+	          <include name="**/*.resx"/>
+	      </fileset>
+	    </copy>
 	</target>
 
 	<target name="clean" depends="cleanDB">
@@ -86,7 +110,7 @@
 		<echo>Deleting development database.</echo>
 		<delete>
 			<fileset dir="${DbDir}">
-				<include name="sp2k.*" />
+				<include name="${DbName}.*" />
 			</fileset>
 		</delete>
 	</target>
