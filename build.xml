@@ -69,14 +69,24 @@
 		<echo>Copying resx files.</echo>
 	</target>
 
-	<target name="clean">
+	<target name="clean" depends="cleanDB">
 		<description>Deletes build artifacts.</description>
 		<echo>Deleting build artifacts.</echo>
+		<delete>
+			<include name="${BuildDir}" />
+			<include name="${DistDir}" />
+			<include name="${DocDir}" />
+		</delete>
 	</target>
 
 	<target name="cleanDB">
 		<description>Deletes the development database.</description>
 		<echo>Deleting development database.</echo>
+		<delete>
+			<fileset dir="${DbDir}">
+				<include name="sp2k.*" />
+			</fileset>
+		</delete>
 	</target>
 
 	<target name="echo">
