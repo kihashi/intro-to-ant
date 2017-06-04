@@ -2,6 +2,7 @@
 
 	<property name="SrcDir" value="src" />
 	<property name="BuildDir" value="build" />
+	<property name="DistDir" value="dist" />
 	<property name="TestDir" value="test" />
 	<property name="DocDir" value="docs" />
 	<property name="DbDir" value="db" />
@@ -29,6 +30,7 @@
 		<echo>Creating build directories.</echo>
 
 		<mkdir dir="${BuildDir}" />
+		<mkdir dir="${DistDir}" />
 		<mkdir dir="${DocDir}" />
 		<mkdir dir="${DbDir}" />
 		<!-- Just to demonstrate. Normally I would prefer to use `depends` -->
@@ -52,7 +54,8 @@
 
 	<target name="package" depends="init,initDB,build">
 		<description>Packages the code into a procedure library.</description>
-		<echo>Packaging ${BuildDir} into ${ant.project.name}.pl</echo>
+		<echo>Packaging ${BuildDir} into ${DistDir}/${ant.project.name}.pl</echo>
+		<PCTLibrary destfile="{DistDir}/${ant.project.name}.pl" basedir="${BuildDir}" />
 	</target>
 
 	<target name="deploy" depends="init,initDB,build,package">
