@@ -29,29 +29,31 @@
 		<mkdir dir="${BuildDir}" />
 		<mkdir dir="${DocDir}" />
 		<mkdir dir="${DbDir}" />
+		<!-- Just to demonstrate. Normally I would prefer to use `depends` -->
+		<antcall target="database" />
 	</target>
 	
-	<target name="database">
+	<target name="database" depends="init">
 		<description>Sets up the database for the project.</description>
 		<echo>Copying database to ${DbDir}.</echo>
 	</target>
 
-	<target name="build" depends="init">
+	<target name="build" depends="init,database">
 		<description>Compiles source code.</description>
 		<echo>Compiling Source Code from ${SrcDir} into ${BuildDir}</echo>
 	</target>
 
-	<target name="test" depends="build">
+	<target name="test" depends="init,build">
 		<description>Runs project tests.</description>
 		<echo>Running tests from ${TestDir}.</echo>
 	</target>
 
-	<target name="package" depends="build">
+	<target name="package" depends="init,database,build">
 		<description>Packages the code into a procedure library.</description>
 		<echo>Packaging ${BuildDir} into ${ant.project.name}.pl</echo>
 	</target>
 	
-	<target name="deploy" depends="package">
+	<target name="deploy" depends="init,database,build,package">
 		<description>Deploys the procedure library via SSH</description>
 		<echo>Deploying Package to ${SSH_SERVER}</echo>
 	</target>
