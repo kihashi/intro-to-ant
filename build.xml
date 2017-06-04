@@ -57,6 +57,10 @@
 		<description>Deploys the procedure library via SSH</description>
 		<echo>Deploying Package to ${SSH_SERVER}</echo>
 	</target>
+	
+	<target name="copy_resx" depends="init">
+		<description>Copies RESX files to the build directory.</description>
+	</target>
 
 	<target name="echo">
 		<description>Echoes the input parameter.</description>
