@@ -12,6 +12,8 @@
 	<taskdef resource="PCT.properties" />
 	<typedef resource="types.properties" />
 
+	<DlcHome value="${DLC}" />
+
 	<target name="props">
 		<description>Displays the properties for builds.</description>
 		<!-- We could also use <echoproperties /> here, but it displays *a lot* of data -->
