@@ -33,12 +33,12 @@
 		<antcall target="database" />
 	</target>
 	
-	<target name="database" depends="init">
+	<target name="initDB" depends="init">
 		<description>Sets up the database for the project.</description>
 		<echo>Copying database to ${DbDir}.</echo>
 	</target>
 
-	<target name="build" depends="init,database">
+	<target name="build" depends="init,initDB">
 		<description>Compiles source code.</description>
 		<echo>Compiling Source Code from ${SrcDir} into ${BuildDir}</echo>
 	</target>
@@ -48,12 +48,12 @@
 		<echo>Running tests from ${TestDir}.</echo>
 	</target>
 
-	<target name="package" depends="init,database,build">
+	<target name="package" depends="init,initDB,build">
 		<description>Packages the code into a procedure library.</description>
 		<echo>Packaging ${BuildDir} into ${ant.project.name}.pl</echo>
 	</target>
 	
-	<target name="deploy" depends="init,database,build,package">
+	<target name="deploy" depends="init,initDB,build,package">
 		<description>Deploys the procedure library via SSH</description>
 		<echo>Deploying Package to ${SSH_SERVER}</echo>
 	</target>
