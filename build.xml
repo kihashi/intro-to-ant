@@ -1,0 +1,63 @@
+<project name="AntDemo" default="build" basedir=".">
+
+	<property name="SrcDir" value="src" />
+	<property name="BuildDir" value="build" />
+	<property name="TestDir" value="test" />
+	<property name="DocDir" value="docs" />
+	<property name="DbDir" value="db" />
+
+	<property file="build.properties" />
+
+	<!-- Sets up PCT for OE compilation and related tasks -->
+	<taskdef resource="PCT.properties" />
+	<typedef resource="types.properties" />
+
+	<target name="props">
+		<description>Displays the properties for builds.</description>
+		<!-- We could also use <echoproperties /> here, but it displays *a lot* of data -->
+		<echo>${SrcDir}</echo>
+		<echo>${BuildDir}</echo>
+		<echo>${TestDir}</echo>
+		<echo>${DLC}</echo>
+		<echo>${LOG}</echo>
+	</target>
+
+	<target name="init">
+		<description>Creates initial directories.</description>
+		<echo>Creating build directories.</echo>
+
+		<mkdir dir="${BuildDir}" />
+		<mkdir dir="${DocDir}" />
+		<mkdir dir="${DbDir}" />
+	</target>
+	
+	<target name="database">
+		<description>Sets up the database for the project.</description>
+		<echo>Copying database to ${DbDir}.</echo>
+	</target>
+
+	<target name="build" depends="init">
+		<description>Compiles source code.</description>
+		<echo>Compiling Source Code from ${SrcDir} into ${BuildDir}</echo>
+	</target>
+
+	<target name="test" depends="build">
+		<description>Runs project tests.</description>
+		<echo>Running tests from ${TestDir}.</echo>
+	</target>
+
+	<target name="package" depends="build">
+		<description>Packages the code into a procedure library.</description>
+		<echo>Packaging ${BuildDir} into ${ant.project.name}.pl</echo>
+	</target>
+	
+	<target name="deploy" depends="package">
+		<description>Deploys the procedure library via SSH</description>
+		<echo>Deploying Package to ${SSH_SERVER}</echo>
+	</target>
+
+	<target name="echo">
+		<description>Echoes the input parameter.</description>
+		<echo>${echo}</echo>
+	</target>
+</project>
