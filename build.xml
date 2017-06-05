@@ -37,8 +37,6 @@
 		<mkdir dir="${DistDir}" />
 		<mkdir dir="${DocDir}" />
 		<mkdir dir="${DbDir}" />
-		<!-- Just to demonstrate. Normally I would prefer to use `depends` -->
-		<antcall target="database" />
 	</target>
 
 	<target name="initDB" depends="init">
