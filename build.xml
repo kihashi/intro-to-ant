@@ -47,23 +47,25 @@
 
 	<target name="build" depends="init,initDB">
 		<description>Compiles source code.</description>
+		<record name="${LOG}" action="start" append="false" />
 		<echo>Compiling Source Code from ${SrcDir} into ${BuildDir}</echo>
-	    <PCTCompile destDir="${BuildDir}">
-	      <PCTConnection dbName="${DbDir}/${DbName}" />
-	        <fileset dir="${SrcDir}">
-	            <include name="**/*.p" />
-	            <include name="**/*.cls" />
-	        </fileset>
-	        <fileset dir="${TestDir}">
-	            <include name="**/*.p" />
-	            <include name="**/*.cls" />
-	        </fileset>
-	        <propath>
-	            <pathelement path="${SrcDir}" />
-	            <pathelement path="${TestDir}" />
-	        </propath>
-	    </PCTCompile>
-		<antcall>copy_resx</antcall>
+		<PCTCompile destDir="${BuildDir}">
+			<PCTConnection dbName="${DbDir}/${DbName}" singleUser="True" />
+			<fileset dir="${SrcDir}">
+				<include name="**/*.p" />
+				<include name="**/*.cls" />
+			</fileset>
+			<fileset dir="${TestDir}">
+				<include name="**/*.p" />
+				<include name="**/*.cls" />
+			</fileset>
+			<propath>
+				<pathelement path="${SrcDir}" />
+				<pathelement path="${TestDir}" />
+			</propath>
+		</PCTCompile>
+		<antcall target="copy_resx" />
+		<record name="${LOG}" action="stop" />
 	</target>
 
 	<target name="test" depends="init,build">
