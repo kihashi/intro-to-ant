@@ -5,6 +5,7 @@
 	<property name="DistDir" value="dist" />
 	<property name="TestDir" value="tests" />
 	<property name="DocDir" value="docs" />
+	<property name="HtmlDoc" value="html" />
 	<property name="DbDir" value="db" />
 	<property name="DbName" value="sp2k" />
 
@@ -13,6 +14,7 @@
 	<!-- Sets up PCT for OE compilation and related tasks -->
 	<taskdef resource="PCT.properties" />
 	<typedef resource="types.properties" />
+	<taskdef resource="extras115.properties" />
 
 	<DlcHome value="${DLC}" />
 
@@ -37,6 +39,7 @@
 		<mkdir dir="${DistDir}" />
 		<mkdir dir="${DocDir}" />
 		<mkdir dir="${DbDir}" />
+		<mkdir dir="${HtmlDoc}" />
 	</target>
 
 	<target name="initDB" depends="init">
@@ -49,7 +52,7 @@
 		<description>Compiles source code.</description>
 		<record name="${LOG}" action="start" append="false" />
 		<echo>Compiling Source Code from ${SrcDir} into ${BuildDir}</echo>
-		<PCTCompile destDir="${BuildDir}">
+		<PCTCompile destDir="${BuildDir}" preProcessDir="preprocess">
 			<PCTConnection dbName="${DbDir}/${DbName}" singleUser="True" />
 			<fileset dir="${SrcDir}">
 				<include name="**/*.p" />
@@ -80,6 +83,15 @@
 		</ABLUnit>
 	</target>
 
+	<target name="docs" depends="init,build">
+		<description>Creates HTML docs from class comments.</description>
+		<echo>Generating Docs.</echo>
+		<ClassDocumentation destDir="${DocDir}">
+			<fileset dir="preprocess" includes="**/*.cls" />
+		</ClassDocumentation>
+		<HTMLDocumentation sourceDir="${DocDir}" destDir="${HtmlDoc}" />
+	</target>
+
 	<target name="package" depends="init,initDB,build">
 		<description>Packages the code into a procedure library.</description>
 		<echo>Packaging ${BuildDir} into ${DistDir}/${ant.project.name}.pl</echo>
@@ -108,6 +120,8 @@
 		<delete dir="${BuildDir}" />
 		<delete dir="${DistDir}" />
 		<delete dir="${DocDir}" />
+		<delete dir="preprocess" />
+		<delete dir="${HtmlDoc}" />
 	</target>
 
 	<target name="cleanDB">
