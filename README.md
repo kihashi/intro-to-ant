@@ -46,7 +46,7 @@ Whenever you see that, replace it with the path to your OpenEdge install.
 For in-depth and up-to-date information, please see the [PCT Wiki][1].
 
 1. Download the latest PCT Jar file from the [PCT Github Repository][2].
-2. Copy the .jar file to `$ANT_HOME/lib`.
+2. Copy the .jar file to `$ANT_HOME\lib`.
 
 [1]: https://github.com/Riverside-Software/pct/wiki/InstallDocumentation
 [2]: https://github.com/Riverside-Software/pct/releases/latest
