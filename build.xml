@@ -95,7 +95,7 @@
 	<target name="package" depends="init,initDB,build">
 		<description>Packages the code into a procedure library.</description>
 		<echo>Packaging ${BuildDir} into ${DistDir}/${ant.project.name}.pl</echo>
-		<PCTLibrary destfile="{DistDir}/${ant.project.name}.pl" basedir="${BuildDir}" />
+		<PCTLibrary destfile="${DistDir}/${ant.project.name}.pl" basedir="${BuildDir}" />
 	</target>
 
 	<target name="deploy" depends="init,initDB,build,package">
