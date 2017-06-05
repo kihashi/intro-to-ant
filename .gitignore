@@ -1,2 +1,7 @@
 build.properties
 db/
+build/
+*.r
+results.xml
+preprocess/
+dist/
