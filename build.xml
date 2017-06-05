@@ -19,14 +19,14 @@
 	<target name="props">
 		<description>Displays the properties for builds.</description>
 		<!-- We could also use <echoproperties /> here, but it displays *a lot* of data -->
-		<echo>${SrcDir}</echo>
-		<echo>${BuildDir}</echo>
-		<echo>${DistDir}</echo>
-		<echo>${DbDir}</echo>
-		<echo>${DbName}</echo>
-		<echo>${TestDir}</echo>
-		<echo>${DLC}</echo>
-		<echo>${LOG}</echo>
+		<echo>Src: ${SrcDir}</echo>
+		<echo>Build: ${BuildDir}</echo>
+		<echo>Dist: ${DistDir}</echo>
+		<echo>DBDir: ${DbDir}</echo>
+		<echo>DB: ${DbName}</echo>
+		<echo>Test: ${TestDir}</echo>
+		<echo>DLC: ${DLC}</echo>
+		<echo>LOG: ${LOG}</echo>
 	</target>
 
 	<target name="init">
