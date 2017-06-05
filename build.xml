@@ -69,6 +69,13 @@
 	<target name="test" depends="init,build">
 		<description>Runs project tests.</description>
 		<echo>Running tests from ${TestDir}.</echo>
+		<ABLUnit>
+			<PCTConnection dbName="${DbDir}/${DbName}" singleUser="True" />
+			<fileset dir="${TestDir}" includes="**/*.cls" />
+			<propath>
+				<pathelement path="${BuildDir}" />
+			</propath>
+		</ABLUnit>
 	</target>
 
 	<target name="package" depends="init,initDB,build">
